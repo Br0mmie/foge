@@ -55,17 +55,21 @@ func create_folders(path string, name string) {
 	}
 }
 
+func folder_suite(path string) {
+	create_folders(path, "")
+	create_folders(path, "EPT")
+	create_folders(path, "IPT")
+	create_folders(path, "EPT/evidence")
+	create_folders(path, "IPT/evidence")
+}
+
 func main() {
 	path := os.Args[1]
 
 	if len(path) == 1 && path == "." {
-		fmt.Println("Should be current directory.")
+		wd, _ := os.Getwd()
+		folder_suite(wd)
 	} else {
 		fmt.Println(path)
-		create_folders(path, "")
-		create_folders(path, "EPT")
-		create_folders(path, "IPT")
-		create_folders(path, "EPT/evidence")
-		create_folders(path, "IPT/evidence")
 	}
 }
