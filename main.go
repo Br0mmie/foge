@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var rootLevelFolders = []string{
@@ -64,12 +66,48 @@ func folder_suite(path string) {
 }
 
 func main() {
-	path := os.Args[1]
 
+	if len(os.Args) == 1 {
+		fmt.Print("No path specified. Would you like to create it?: ")
+		scanner := bufio.NewScanner(os.Stdin)
+		if scanner.Scan() {
+			choice := strings.TrimSpace(scanner.Text())
+
+			switch choice {
+			case "y":
+				if scanner.Scan() {
+					input := strings.TrimSpace(scanner.Text())
+					if input == "" {
+						fmt.Println("No folder name provided. Exiting.")
+						return
+					}
+					wd, err := os.Getwd()
+					if err != nil {
+						log.Fatalf("Failed to get current working directory: %v", err)
+					}
+					path := filepath.Join(wd, input)
+					if err := os.MkdirAll(path, os.ModePerm); err != nil {
+						log.Fatalf("Failed to create project folder %s: %v", path, err)
+					}
+					folder_suite(path)
+					fmt.Printf("Folder structure created in: %s\n", path)
+					return
+				}
+				if err := scanner.Err(); err != nil {
+					log.Fatalf("Error reading input: %v", err)
+				}
+				return
+			case "n":
+				wd, _ := os.Getwd()
+				folder_suite(wd)
+			}
+		}
+	}
+	path := os.Args[1]
 	if len(path) == 1 && path == "." {
 		wd, _ := os.Getwd()
 		folder_suite(wd)
 	} else {
-		fmt.Println(path)
+		folder_suite(os.Args[1])
 	}
 }
