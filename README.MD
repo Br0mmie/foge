@@ -9,7 +9,7 @@
 **Before doing any of this, make sure go is installed!!!**
 
 ```
-wget https://github.com/Br0mmie/folder_gen_go/releases/download/Beta/install.sh
+wget https://github.com/Br0mmie/foge/releases/download/Alpha/install.sh
 chmod +x install.sh
 ./install.sh
 ```
