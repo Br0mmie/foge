@@ -12,6 +12,7 @@
 wget https://github.com/Br0mmie/foge/releases/download/Alpha/install.sh
 chmod +x install.sh
 ./install.sh
+rm install.sh
 ```
 
 ## Usage
