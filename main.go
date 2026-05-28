@@ -68,9 +68,10 @@ func folder_suite(path string) {
 func main() {
 
 	if len(os.Args) == 1 {
-		fmt.Print("No path specified. Would you like to create it?: ")
+		fmt.Print("No path specified. Would you like to create it? [y/n]: ")
 		scanner := bufio.NewScanner(os.Stdin)
 		if scanner.Scan() {
+			fmt.Print("Folder name: ")
 			choice := strings.TrimSpace(scanner.Text())
 
 			switch choice {
